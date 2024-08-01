@@ -1,0 +1,125 @@
+{
+    "data": [
+      {
+        "id": 1,
+        "ten": "Big Mac",
+        "loai": "Burger",
+        "mo_ta": "Hai miếng thịt bò, sốt đặc biệt, rau diếp, phô mai, dưa chua, hành tây trên bánh mì mè",
+        "calo": 503,
+        "gia": 65000
+      },
+      {
+        "id": 2,
+        "ten": "McChicken",
+        "loai": "Burger",
+        "mo_ta": "Thịt gà chiên giòn, rau diếp thái nhỏ và sốt mayonnaise trên bánh mì tròn",
+        "calo": 365,
+        "gia": 39000
+      },
+      {
+        "id": 3,
+        "ten": "Khoai tây chiên lớn",
+        "loai": "Món phụ",
+        "mo_ta": "Khoai tây chiên vàng giòn",
+        "calo": 365,
+        "gia": 35000
+      },
+      {
+        "id": 4,
+        "ten": "McFlurry Oreo",
+        "loai": "Tráng miệng",
+        "mo_ta": "Kem vani mềm với bánh Oreo xay nhuyễn",
+        "calo": 380,
+        "gia": 35000
+      },
+      {
+        "id": 5,
+        "ten": "Gà McNuggets 6 miếng",
+        "loai": "Món phụ",
+        "mo_ta": "6 miếng gà McNuggets chiên giòn",
+        "calo": 269,
+        "gia": 45000
+      },
+      {
+        "id": 6,
+        "ten": "Double Cheeseburger",
+        "loai": "Burger",
+        "mo_ta": "Hai miếng thịt bò, hai miếng phô mai, dưa chua, hành tây, mù tạt và sốt cà chua trên bánh mì tròn",
+        "calo": 440,
+        "gia": 55000
+      },
+      {
+        "id": 7,
+        "ten": "Filet-O-Fish",
+        "loai": "Burger",
+        "mo_ta": "Cá philê chiên giòn với phô mai và sốt tartar trên bánh mì hấp",
+        "calo": 390,
+        "gia": 50000
+      },
+      {
+        "id": 8,
+        "ten": "Happy Meal Hamburger",
+        "loai": "Happy Meal",
+        "mo_ta": "Hamburger nhỏ, khoai tây chiên nhỏ và đồ uống nhỏ (sữa, nước ép hoặc nước ngọt)",
+        "calo": 305,
+        "gia": 40000
+      },
+      {
+        "id": 9,
+        "ten": "Happy Meal McNuggets 4 miếng",
+        "loai": "Happy Meal",
+        "mo_ta": "4 miếng gà McNuggets, khoai tây chiên nhỏ và đồ uống nhỏ (sữa, nước ép hoặc nước ngọt)",
+        "calo": 250,
+        "gia": 40000
+      },
+      {
+        "id": 10,
+        "ten": "Egg McMuffin",
+        "loai": "Bữa sáng",
+        "mo_ta": "Trứng, thịt xông khói và phô mai Mỹ trên bánh muffin nướng",
+        "calo": 310,
+        "gia": 35000
+      },
+      {
+        "id": 11,
+        "ten": "Sausage McMuffin",
+        "loai": "Bữa sáng",
+        "mo_ta": "Xúc xích, trứng và phô mai Mỹ trên bánh muffin nướng",
+        "calo": 370,
+        "gia": 35000
+      },
+      {
+        "id": 12,
+        "ten": "Hash Brown",
+        "loai": "Bữa sáng",
+        "mo_ta": "Bánh khoai tây chiên giòn",
+        "calo": 150,
+        "gia": 15000
+      },
+      {
+        "id": 13,
+        "ten": "McCafé Premium Roast Coffee",
+        "loai": "Đồ uống",
+        "mo_ta": "Cà phê rang xay nguyên chất",
+        "calo": 5,
+        "gia": 25000
+      },
+      {
+        "id": 14,
+        "ten": "Coca-Cola",
+        "loai": "Đồ uống",
+        "mo_ta": "Nước ngọt Coca-Cola",
+        "calo": 140,
+        "gia": 20000
+      },
+      {
+        "id": 15,
+        "ten": "Sprite",
+        "loai": "Đồ uống",
+        "mo_ta": "Nước ngọt Sprite",
+        "calo": 140,
+        "gia": 20000
+      }
+    ]
+  }
+  

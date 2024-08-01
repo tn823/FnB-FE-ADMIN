@@ -1,0 +1,3 @@
+[submodule "react-member-ui"]
+	path = react-member-ui
+	url = git@github.com-personal:fandboder/react-member-ui.git

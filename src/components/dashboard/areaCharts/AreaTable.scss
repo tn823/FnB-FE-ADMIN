@@ -1,0 +1,109 @@
+.content-area-table {
+    background: var(--secondary-color);
+    border-radius: 5px;
+    box-shadow: var(--light-shadow1);
+    padding: 16px;
+
+    @media (max-width: 768px) {
+        padding: 12px;
+    }
+
+    .data-table-title {
+        font-size: 18px;
+        color: var(--xl-text-color);
+        margin-bottom: 12px;
+    }
+
+    .data-table-diagram {
+        border-radius: 6px;
+        border: 1px solid var(--tbl-border-color);
+        overflow-x: auto;
+
+        &::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: var(--scroll-track-bg-color);
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #e9e9e9;
+            border-radius: 3px;
+        }
+
+        table {
+            min-width: 100%;
+            border-collapse: collapse;
+            color: var(--text-color-inverted);
+
+            td,
+            th {
+                padding: 14px;
+                border-bottom: 1px solid var(--tbl-border-color);
+
+                @media (max-width: 768px) {
+                    font-size: 15px;
+                    padding: 12px;
+                }
+            }
+
+            th {
+                background-color: var(--thead-bg-color);
+                font-size: 17px;
+                text-align: left;
+
+                &:last-child {
+                    text-align: center;
+                }
+            }
+
+            tbody tr:hover {
+                background-color: var(--hover-bg-color);
+            }
+
+            .dt-cell-action {
+                text-align: center;
+
+                .view-details-link {
+                    color: var(--link-color);
+                    font-weight: 600;
+                    text-decoration: none;
+                    transition: color 0.3s;
+
+                    &:hover {
+                        color: var(--link-hover-color);
+                    }
+                }
+            }
+
+            .dt-status {
+                display: flex;
+                align-items: center;
+
+                .dt-status-dot {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    margin-right: 6px;
+
+                    &.dot-Doing {
+                        background-color: var(--orange-color);
+                    }
+
+                    &.dot-Waiting {
+                        background-color: var(--red-color);
+                    }
+
+                    &.dot-Done {
+                        background-color: var(--green-color);
+                    }
+                }
+
+                .dt-status-text {
+                    text-transform: capitalize;
+                }
+            }
+        }
+    }
+}

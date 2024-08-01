@@ -1,0 +1,146 @@
+.info-product-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.info-product-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    max-width: 80%;
+    width: 30%;
+}
+
+.info-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.info-details {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 15px;
+}
+
+.info-field {
+    display: flex;
+    align-items: center;
+}
+
+.info-label {
+    font-weight: bold;
+    width: 80px;
+}
+
+.info-value {
+    word-break: break-all;
+}
+
+.info-images {
+    display: flex;
+    overflow-x: auto;
+}
+
+.info-image {
+    max-width: 100px;
+    height: auto;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.info-actions {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.btn-back {
+    width: 100px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-back:hover {
+    background-color: #0056b3;
+}
+
+.loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-size: 24px;
+    color: #007bff;
+}
+
+@media (max-width: 1050px) {
+    .info-details {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .info-field {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .info-label {
+        width: auto;
+        margin-bottom: 5px;
+    }
+}
+
+@media (max-width: 770px) {
+    .info-product-container {
+        padding: 10px;
+    }
+
+    .info-title {
+        font-size: 1.5em;
+    }
+
+    .info-details {
+        grid-template-columns: 1fr;
+        gap: 5px;
+    }
+
+    .info-field {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .info-label {
+        width: auto;
+        margin-bottom: 3px;
+    }
+
+    .info-images {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .info-image {
+        max-width: 80px;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .btn-back {
+        width: auto;
+        padding: 10px 15px;
+    }
+}
