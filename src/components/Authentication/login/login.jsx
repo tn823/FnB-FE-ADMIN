@@ -12,13 +12,10 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "https://node-be-api.vercel.app/api/login",
-        {
-          username,
-          password,
-        }
-      );
+      const response = await axios.post("https://fnb-be.vercel.app/api/login", {
+        username,
+        password,
+      });
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("position", response.data.position);
       navigate("/");
