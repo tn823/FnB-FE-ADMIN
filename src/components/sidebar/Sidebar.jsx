@@ -10,7 +10,7 @@ import {
   MdOutlineCategory,
 } from "react-icons/md";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import "./Sidebar.scss";
+import "./style/Sidebar.scss";
 import { SidebarContext } from "../../context/SidebarContext";
 
 const Sidebar = () => {
@@ -18,7 +18,6 @@ const Sidebar = () => {
   const navbarRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const position = localStorage.getItem("position");
 
   const handleClickOutside = (event) => {
     if (
@@ -128,8 +127,6 @@ const Sidebar = () => {
                 <span className="menu-link-text">Danh Mục</span>
               </Link>
             </li>
-
-            {position === "admin" && (
               <>
                 <li className="menu-item">
                   <Link
@@ -145,7 +142,6 @@ const Sidebar = () => {
                   </Link>
                 </li>
               </>
-            )}
           </ul>
         </div>
         <div className="sidebar-menu sidebar-menu2">

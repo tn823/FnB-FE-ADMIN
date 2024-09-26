@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../context/ThemeContext";
-import "./CreateAccount.scss";
+import "./style/CreateAccount.css";
 
 function CreateAccount() {
   const { theme } = useContext(ThemeContext);
