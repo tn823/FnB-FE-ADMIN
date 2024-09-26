@@ -15,9 +15,10 @@ import { PropTypes } from "prop-types";
 import AccountList from "./components/Account/AccountList";
 import CreateAccount from "./components/Account/CreateAccount";
 import UpdateAccount from "./components/Account/UpdateAccount";
-import CategoryList from "./components/Catogories/CategoryList";
-import CreateCategory from "./components/Catogories/CreateCategory";
-import UpdateCategory from "./components/Catogories/UpdateCategory";
+import CategoryList from "./components/Catogories/index";
+import CategoryDetails from "./components/Catogories/details";
+// import CreateCategory from "./components/Catogories/CreateCategory";
+// import UpdateCategory from "./components/Catogories/UpdateCategory";
 import Order from "./components/Transactions/OrderList";
 import OrderDetail from "./components/Transactions/InfoOrder";
 
@@ -35,6 +36,7 @@ function App() {
     <>
       <Router>
         <Routes>
+          {/* LOGIN */}
           <Route path="/login" element={<Login />} />
           <Route element={<BaseLayout />}>
             <Route
@@ -45,6 +47,7 @@ function App() {
                 </PrivateRoute>
               }
             />
+            {/* PRODUCT */}
             <Route
               path="/products"
               element={
@@ -69,18 +72,15 @@ function App() {
                 </PrivateRoute>
               }
             />
-
+            {/* ACCOUNT */}
             <Route path="/accounts" element={<AccountList />} />
             <Route path="/accounts/createaccount" element={<CreateAccount />} />
             <Route path="/accounts/update/:id" element={<UpdateAccount />} />
-
+            {/* CATEGORY */}
             <Route path="/categories" element={<CategoryList />} />
-            <Route
-              path="/categories/createcategory"
-              element={<CreateCategory />}
-            />
-            <Route path="/categories/update/:id" element={<UpdateCategory />} />
-
+            <Route path="/categories/createcategory" element={<CategoryDetails />} />
+            <Route path="/categories/update/:id" element={<CategoryDetails />} />
+            {/* ORDER */}
             <Route path="/orders" element={<Order />} />
             <Route path="/orders/:id" element={<OrderDetail />} />
 

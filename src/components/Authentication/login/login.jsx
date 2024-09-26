@@ -1,7 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./Login.scss";
+import "../style/Login.css";
+import { ENDPOINTS } from "../../../constants/common";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -12,7 +13,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://fnb-be.vercel.app/api/login", {
+      const response = await axios.post(ENDPOINTS.LOGIN, {
         username,
         password,
       });

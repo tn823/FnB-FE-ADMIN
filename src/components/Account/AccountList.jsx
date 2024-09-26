@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "./AccountList.scss";
+import "./style/AccountList.css";
 // import { Link, useNavigate } from "react-router-dom";
 
 function AccountList() {
