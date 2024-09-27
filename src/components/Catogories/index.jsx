@@ -12,6 +12,9 @@ import {
 } from "antd";
 import axios from "axios";
 import { ENDPOINTS } from "../../constants/common";
+import { Trash2 } from "lucide-react";
+import { Group } from "@mantine/core";
+Group
 
 const { Search } = Input;
 const { Option } = Select;
@@ -89,31 +92,51 @@ useEffect(() => {
 
   const columns = [
     {
-      title: "ID",
+      title: <span style={{ fontSize: "16px", fontWeight: "bold" }}>ID</span>, // Tăng kích thước chữ của tiêu đề
       dataIndex: "id",
-      key: "categoryId",
+      key: "id",
     },
     {
-      title: "Tên Danh Mục",
+      title: (
+        <span style={{ fontSize: "16px", fontWeight: "bold" }}>
+          Tên Danh Mục
+        </span>
+      ), // Tăng kích thước chữ của tiêu đề
       dataIndex: "categoryName",
       key: "categoryName",
     },
     {
-      title: "Tùy chỉnh",
+      title: (
+        <span style={{ fontSize: "16px", fontWeight: "bold" }}>Tùy chỉnh</span>
+      ),
       key: "actions",
+      width: "150px",
+      fixed: "right",
+      align: "center",
       render: (_, record) => (
-        <Button
-          type="danger"
-          onClick={(e) => {
-            e.stopPropagation();
-            handleDelete(record.id);
-          }}
-        >
-          Xóa
-        </Button>
+        <Group justify="center" gap={16}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              cursor: "pointer",
+            }}
+          >
+            <Trash2
+              type="danger"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDelete(record.id);
+              }}
+            >
+              Xóa
+            </Trash2>
+          </div>
+        </Group>
       ),
     },
   ];
+
 
   return (
     <Layout style={{ padding: "20px" }}>
@@ -147,7 +170,7 @@ useEffect(() => {
             </Select>
           </Col>
           <Col>
-            <Link to="/products/createproduct">
+            <Link to="/categories/createcategory">
               <Button type="primary" style={{ marginLeft: "20px" }}>
                 Thêm mới +
               </Button>
@@ -158,9 +181,9 @@ useEffect(() => {
         <Table
           columns={columns}
           dataSource={data}
-          rowKey="categoryId"
+          rowKey="id"
           onRow={(record) => ({
-            onClick: () => handleRowClick(record.categoryId),
+            onClick: () => handleRowClick(record.id),
           })}
           pagination={{ pageSize: 10 }}
           loading={!data.length && !errorMessage}

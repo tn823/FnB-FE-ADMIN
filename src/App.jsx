@@ -6,6 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import BaseLayout from "./layout/BaseLayout";
+import { MantineProvider } from "@mantine/core"; // Import MantineProvider
 import { Dashboard, PageNotFound, Product } from "./screens";
 import CreateProduct from "./components/product/crud/CreateProduct";
 import UpdateProduct from "./components/product/crud/UpdateProduct";
@@ -17,8 +18,6 @@ import CreateAccount from "./components/Account/CreateAccount";
 import UpdateAccount from "./components/Account/UpdateAccount";
 import CategoryList from "./components/Catogories/index";
 import CategoryDetails from "./components/Catogories/details";
-// import CreateCategory from "./components/Catogories/CreateCategory";
-// import UpdateCategory from "./components/Catogories/UpdateCategory";
 import Order from "./components/Transactions/OrderList";
 import OrderDetail from "./components/Transactions/InfoOrder";
 
@@ -33,26 +32,34 @@ function App() {
   };
 
   return (
-    <>
+    <MantineProvider
+      theme={{ colorScheme: "light" }} // Bạn có thể chỉnh theme tại đây (light hoặc dark)
+      withGlobalStyles
+      withNormalizeCSS
+    >
       <Router>
         <Routes>
           {/* LOGIN */}
           <Route path="/login" element={<Login />} />
           <Route element={<BaseLayout />}>
+            {/* HOME */}
             <Route
               path="/"
               element={
                 <PrivateRoute>
-                  <Dashboard />
+                  {" "}
+                  <Dashboard />{" "}
                 </PrivateRoute>
               }
             />
+
             {/* PRODUCT */}
             <Route
               path="/products"
               element={
                 <PrivateRoute>
-                  <Product />
+                  {" "}
+                  <Product />{" "}
                 </PrivateRoute>
               }
             />
@@ -60,7 +67,8 @@ function App() {
               path="/products/createproduct"
               element={
                 <PrivateRoute>
-                  <CreateProduct />
+                  {" "}
+                  <CreateProduct />{" "}
                 </PrivateRoute>
               }
             />
@@ -68,18 +76,28 @@ function App() {
               path="/products/updateproduct/:id"
               element={
                 <PrivateRoute>
-                  <UpdateProduct />
+                  {" "}
+                  <UpdateProduct />{" "}
                 </PrivateRoute>
               }
             />
+
             {/* ACCOUNT */}
             <Route path="/accounts" element={<AccountList />} />
             <Route path="/accounts/createaccount" element={<CreateAccount />} />
             <Route path="/accounts/update/:id" element={<UpdateAccount />} />
+
             {/* CATEGORY */}
             <Route path="/categories" element={<CategoryList />} />
-            <Route path="/categories/createcategory" element={<CategoryDetails />} />
-            <Route path="/categories/update/:id" element={<CategoryDetails />} />
+            <Route
+              path="/categories/createcategory"
+              element={<CategoryDetails />}
+            />
+            <Route
+              path="/categories/update/:id"
+              element={<CategoryDetails />}
+            />
+
             {/* ORDER */}
             <Route path="/orders" element={<Order />} />
             <Route path="/orders/:id" element={<OrderDetail />} />
@@ -88,7 +106,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
-    </>
+    </MantineProvider>
   );
 }
 
