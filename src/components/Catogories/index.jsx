@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Table,
-  Button,
-  Input,
-  Select,
-  Row,
-  Col,
-  Typography,
-  Layout,
-} from "antd";
+import { Table, Input, Select, Row, Col, Typography, Layout } from "antd";
 import axios from "axios";
 import { ENDPOINTS } from "../../constants/common";
+import { Trash2 } from "lucide-react";
+import { Group } from "@mantine/core";
+import AddButton from "../Button/AddButton";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -39,35 +33,35 @@ function CategoryList() {
     fetchCategories();
   }, []);
 
-useEffect(() => {
-  if (searchTerm === "") {
-    fetchCategories(); 
-  } else {
-    const url =
-      searchOption === "id"
-        ? `${ENDPOINTS.CATEGORIES}/${searchTerm}` 
-        : `${ENDPOINTS.CATEGORIES}/${searchOption}/${searchTerm}`; 
+  useEffect(() => {
+    if (searchTerm === "") {
+      fetchCategories();
+    } else {
+      const url =
+        searchOption === "id"
+          ? `${ENDPOINTS.CATEGORIES}/${searchTerm}`
+          : `${ENDPOINTS.CATEGORIES}/${searchOption}/${searchTerm}`;
 
-    axios
-      .get(url)
-      .then((res) => {
-        const resultData = Array.isArray(res.data) ? res.data : [res.data]; 
-        if (resultData.length === 0) {
-          setErrorMessage(
-            `Không tìm thấy danh mục với ${searchOption} là "${searchTerm}"`
-          );
+      axios
+        .get(url)
+        .then((res) => {
+          const resultData = Array.isArray(res.data) ? res.data : [res.data];
+          if (resultData.length === 0) {
+            setErrorMessage(
+              `Không tìm thấy danh mục với ${searchOption} là "${searchTerm}"`
+            );
+            setData([]);
+          } else {
+            setData(resultData);
+            setErrorMessage("");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
           setData([]);
-        } else {
-          setData(resultData); 
-          setErrorMessage("");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setData([]);
-      });
-  }
-}, [searchTerm, searchOption]);
+        });
+    }
+  }, [searchTerm, searchOption]);
 
   const handleDelete = (id) => {
     if (window.confirm("Bạn chắc chắn muốn xóa danh mục này không?")) {
@@ -89,28 +83,47 @@ useEffect(() => {
 
   const columns = [
     {
-      title: "ID",
+      title: <span style={{ fontSize: "16px", fontWeight: "bold" }}>ID</span>,
       dataIndex: "id",
-      key: "categoryId",
+      key: "id",
     },
     {
-      title: "Tên Danh Mục",
+      title: (
+        <span style={{ fontSize: "16px", fontWeight: "bold" }}>
+          Tên Danh Mục
+        </span>
+      ),
       dataIndex: "categoryName",
       key: "categoryName",
     },
     {
-      title: "Tùy chỉnh",
+      title: (
+        <span style={{ fontSize: "16px", fontWeight: "bold" }}>Tùy chỉnh</span>
+      ),
       key: "actions",
+      width: "150px",
+      fixed: "right",
+      align: "center",
       render: (_, record) => (
-        <Button
-          type="danger"
-          onClick={(e) => {
-            e.stopPropagation();
-            handleDelete(record.id);
-          }}
-        >
-          Xóa
-        </Button>
+        <Group justify="center" gap={16}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              cursor: "pointer",
+            }}
+          >
+            <Trash2
+              type="danger"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDelete(record.id);
+              }}
+            >
+              Xóa
+            </Trash2>
+          </div>
+        </Group>
       ),
     },
   ];
@@ -147,10 +160,8 @@ useEffect(() => {
             </Select>
           </Col>
           <Col>
-            <Link to="/products/createproduct">
-              <Button type="primary" style={{ marginLeft: "20px" }}>
-                Thêm mới +
-              </Button>
+            <Link to="/categories/createcategory">
+              <AddButton onClick={() => {}} label="Thêm mới +" />
             </Link>
           </Col>
         </Row>
@@ -158,9 +169,9 @@ useEffect(() => {
         <Table
           columns={columns}
           dataSource={data}
-          rowKey="categoryId"
+          rowKey="id"
           onRow={(record) => ({
-            onClick: () => handleRowClick(record.categoryId),
+            onClick: () => handleRowClick(record.id),
           })}
           pagination={{ pageSize: 10 }}
           loading={!data.length && !errorMessage}

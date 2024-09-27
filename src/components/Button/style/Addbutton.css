@@ -1,0 +1,18 @@
+.add-button {
+    margin-left: 20px;
+    background-color: #28a745;
+    /* Màu nền xanh lá */
+    border-color: #28a745;
+    /* Màu viền xanh lá */
+    color: #fff;
+    /* Màu chữ trắng */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    /* Hiệu ứng chuyển đổi */
+}
+
+.add-button:hover {
+    background-color: #218838;
+    /* Màu nền khi hover */
+    border-color: #1e7e34;
+    /* Màu viền khi hover */
+}

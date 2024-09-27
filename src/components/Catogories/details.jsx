@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { Form, Input, Button, Typography, Layout } from "antd";
 import axios from "axios";
 import { ENDPOINTS } from "../../constants/common";
+import { ArrowLeftIcon } from "lucide-react";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 const { Content } = Layout;
 
 function CategoryDetails() {
@@ -53,6 +54,19 @@ function CategoryDetails() {
   return (
     <Layout style={{ padding: "20px" }}>
       <Content>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "20px",
+          }}
+        >
+          <Link to="/categories">
+            <ArrowLeftIcon size={18} />
+            <Text style={{marginLeft: "8px"}}>Quay lại</Text>
+          </Link>
+        </div>
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
           <Title level={2}>{id ? "Sửa Danh Mục" : "Thêm Danh Mục"}</Title>
         </div>
