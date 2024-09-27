@@ -33,7 +33,7 @@ function App() {
 
   return (
     <MantineProvider
-      theme={{ colorScheme: "light" }} // Bạn có thể chỉnh theme tại đây (light hoặc dark)
+      theme={{ colorScheme: "light" }} 
       withGlobalStyles
       withNormalizeCSS
     >

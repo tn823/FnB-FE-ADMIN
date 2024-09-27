@@ -1,20 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Table,
-  Button,
-  Input,
-  Select,
-  Row,
-  Col,
-  Typography,
-  Layout,
-} from "antd";
+import { Table, Input, Select, Row, Col, Typography, Layout } from "antd";
 import axios from "axios";
 import { ENDPOINTS } from "../../constants/common";
 import { Trash2 } from "lucide-react";
 import { Group } from "@mantine/core";
-Group
+import AddButton from "../Button/AddButton";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -42,35 +33,35 @@ function CategoryList() {
     fetchCategories();
   }, []);
 
-useEffect(() => {
-  if (searchTerm === "") {
-    fetchCategories(); 
-  } else {
-    const url =
-      searchOption === "id"
-        ? `${ENDPOINTS.CATEGORIES}/${searchTerm}` 
-        : `${ENDPOINTS.CATEGORIES}/${searchOption}/${searchTerm}`; 
+  useEffect(() => {
+    if (searchTerm === "") {
+      fetchCategories();
+    } else {
+      const url =
+        searchOption === "id"
+          ? `${ENDPOINTS.CATEGORIES}/${searchTerm}`
+          : `${ENDPOINTS.CATEGORIES}/${searchOption}/${searchTerm}`;
 
-    axios
-      .get(url)
-      .then((res) => {
-        const resultData = Array.isArray(res.data) ? res.data : [res.data]; 
-        if (resultData.length === 0) {
-          setErrorMessage(
-            `Không tìm thấy danh mục với ${searchOption} là "${searchTerm}"`
-          );
+      axios
+        .get(url)
+        .then((res) => {
+          const resultData = Array.isArray(res.data) ? res.data : [res.data];
+          if (resultData.length === 0) {
+            setErrorMessage(
+              `Không tìm thấy danh mục với ${searchOption} là "${searchTerm}"`
+            );
+            setData([]);
+          } else {
+            setData(resultData);
+            setErrorMessage("");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
           setData([]);
-        } else {
-          setData(resultData); 
-          setErrorMessage("");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setData([]);
-      });
-  }
-}, [searchTerm, searchOption]);
+        });
+    }
+  }, [searchTerm, searchOption]);
 
   const handleDelete = (id) => {
     if (window.confirm("Bạn chắc chắn muốn xóa danh mục này không?")) {
@@ -92,7 +83,7 @@ useEffect(() => {
 
   const columns = [
     {
-      title: <span style={{ fontSize: "16px", fontWeight: "bold" }}>ID</span>, // Tăng kích thước chữ của tiêu đề
+      title: <span style={{ fontSize: "16px", fontWeight: "bold" }}>ID</span>,
       dataIndex: "id",
       key: "id",
     },
@@ -101,7 +92,7 @@ useEffect(() => {
         <span style={{ fontSize: "16px", fontWeight: "bold" }}>
           Tên Danh Mục
         </span>
-      ), // Tăng kích thước chữ của tiêu đề
+      ),
       dataIndex: "categoryName",
       key: "categoryName",
     },
@@ -137,7 +128,6 @@ useEffect(() => {
     },
   ];
 
-
   return (
     <Layout style={{ padding: "20px" }}>
       <Content>
@@ -171,9 +161,7 @@ useEffect(() => {
           </Col>
           <Col>
             <Link to="/categories/createcategory">
-              <Button type="primary" style={{ marginLeft: "20px" }}>
-                Thêm mới +
-              </Button>
+              <AddButton onClick={() => {}} label="Thêm mới +" />
             </Link>
           </Col>
         </Row>
