@@ -1,0 +1,7 @@
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    /* Đặt các nút ở bên phải */
+    margin-top: 16px;
+    /* Khoảng cách phía trên cho footer */
+}

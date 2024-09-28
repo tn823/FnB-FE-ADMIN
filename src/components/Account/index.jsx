@@ -6,6 +6,7 @@ import { ENDPOINTS } from "../../constants/common";
 import { Trash2 } from "lucide-react";
 import { Group } from "@mantine/core";
 import AddButton from "../Button/AddButton";
+import ConfirmDeleteModal from './../../modal/delete';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -17,6 +18,8 @@ function AccountPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOption, setSearchOption] = useState("name");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedAccount, setSelectedAccount] = useState(null);
   const navigate = useNavigate();
 
   const fetchCategories = () => {
@@ -63,19 +66,32 @@ function AccountPage() {
     }
   }, [searchTerm, searchOption]);
 
-  const handleDelete = (id) => {
-    if (window.confirm("Bạn chắc chắn muốn xóa tài khoản này không?")) {
+  const showDeleteConfirm = (account) => {
+    setSelectedAccount(account); // Lưu tài khoản muốn xóa
+    setIsModalVisible(true); // Hiển thị modal
+  };
+
+
+  const handleConfirmDelete = () => {
+    if (selectedAccount) {
       axios
-        .delete(`${ENDPOINTS.ACCOUNTS}/${id}`)
-        .then((res) => {
-          console.log(res.data.message);
+        .delete(`${ENDPOINTS.ACCOUNTS}/${selectedAccount.id}`)
+        .then(() => {
           fetchCategories();
         })
         .catch((err) => {
           console.error("Lỗi khi xóa tài khoản:", err);
         });
     }
+    setIsModalVisible(false); // Ẩn modal sau khi xóa
   };
+
+  const handleCancelDelete = () => {
+    setIsModalVisible(false); // Ẩn modal
+    setSelectedAccount(null); // Xóa tài khoản được chọn
+  };
+
+
 
   const handleRowClick = (id) => {
     navigate(`/accounts/update/${id}`);
@@ -122,7 +138,7 @@ function AccountPage() {
               type="danger"
               onClick={(e) => {
                 e.stopPropagation();
-                handleDelete(record.id);
+                showDeleteConfirm(record);
               }}
             >
               Xóa
@@ -181,6 +197,12 @@ function AccountPage() {
           })}
           pagination={{ pageSize: 10 }}
           loading={!data.length && !errorMessage}
+        />
+        <ConfirmDeleteModal
+          visible={isModalVisible}
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
+          title={selectedAccount ? selectedAccount.username : ""} // Hiển thị tên tài khoản trong modal
         />
         {errorMessage && (
           <div style={{ color: "red", textAlign: "center", marginTop: "10px" }}>
