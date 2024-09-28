@@ -4,8 +4,14 @@ export const ENDPOINTS = Object.freeze({
     //login
     LOGIN: `${ROOT_URL}api/login`,
     //account
+    ACCOUNTS: `${ROOT_URL}api/accounts`,
     //product
     //category
     CATEGORIES: `${ROOT_URL}api/categories`,
     //order
 });
+
+export const POSITION = Object.freeze([
+  { value: 'ADMIN', label: 'ADMIN' },
+  { value: 'STAFF', label: 'STAFF' }
+])

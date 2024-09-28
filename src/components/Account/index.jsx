@@ -12,7 +12,7 @@ const { Option } = Select;
 const { Title } = Typography;
 const { Content } = Layout;
 
-function CategoryPage() {
+function AccountPage() {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOption, setSearchOption] = useState("name");
@@ -21,7 +21,7 @@ function CategoryPage() {
 
   const fetchCategories = () => {
     axios
-      .get(ENDPOINTS.CATEGORIES)
+      .get(ENDPOINTS.ACCOUNTS)
       .then((res) => {
         setData(res.data);
         setErrorMessage("");
@@ -39,8 +39,8 @@ function CategoryPage() {
     } else {
       const url =
         searchOption === "id"
-          ? `${ENDPOINTS.CATEGORIES}/${searchTerm}`
-          : `${ENDPOINTS.CATEGORIES}/${searchOption}/${searchTerm}`;
+          ? `${ENDPOINTS.ACCOUNTS}/${searchTerm}`
+          : `${ENDPOINTS.ACCOUNTS}/${searchOption}/${searchTerm}`;
 
       axios
         .get(url)
@@ -48,7 +48,7 @@ function CategoryPage() {
           const resultData = Array.isArray(res.data) ? res.data : [res.data];
           if (resultData.length === 0) {
             setErrorMessage(
-              `Không tìm thấy danh mục với ${searchOption} là "${searchTerm}"`
+              `Không tìm thấy tài khoản với ${searchOption} là "${searchTerm}"`
             );
             setData([]);
           } else {
@@ -64,21 +64,21 @@ function CategoryPage() {
   }, [searchTerm, searchOption]);
 
   const handleDelete = (id) => {
-    if (window.confirm("Bạn chắc chắn muốn xóa danh mục này không?")) {
+    if (window.confirm("Bạn chắc chắn muốn xóa tài khoản này không?")) {
       axios
-        .delete(`${ENDPOINTS.CATEGORIES}/${id}`)
+        .delete(`${ENDPOINTS.ACCOUNTS}/${id}`)
         .then((res) => {
           console.log(res.data.message);
           fetchCategories();
         })
         .catch((err) => {
-          console.error("Lỗi khi xóa danh mục:", err);
+          console.error("Lỗi khi xóa tài khoản:", err);
         });
     }
   };
 
   const handleRowClick = (id) => {
-    navigate(`/categories/update/${id}`);
+    navigate(`/accounts/update/${id}`);
   };
 
   const columns = [
@@ -89,16 +89,21 @@ function CategoryPage() {
     },
     {
       title: (
-        <span style={{ fontSize: "16px", fontWeight: "bold" }}>
-          Tên Danh Mục
-        </span>
+        <span style={{ fontSize: "16px", fontWeight: "bold" }}>Tên Tài Khoản</span>
       ),
-      dataIndex: "categoryName",
-      key: "categoryName",
+      dataIndex: "username",
+      key: "username",
     },
     {
       title: (
-        <span style={{ fontSize: "16px", fontWeight: "bold" }}>Tùy chỉnh</span>
+        <span style={{ fontSize: "16px", fontWeight: "bold" }}>Chức Vụ</span>
+      ),
+      dataIndex: "position",
+      key: "position",
+    },
+    {
+      title: (
+        <span style={{ fontSize: "16px", fontWeight: "bold" }}>Tùy Chỉnh</span>
       ),
       key: "actions",
       width: "150px",
@@ -132,7 +137,7 @@ function CategoryPage() {
     <Layout style={{ padding: "20px" }}>
       <Content>
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
-          <Title level={2}>QUẢN LÝ DANH MỤC</Title>
+          <Title level={2}>QUẢN LÝ TÀI KHOẢN</Title>
         </div>
         <Row
           justify="center"
@@ -155,12 +160,13 @@ function CategoryPage() {
               onChange={(value) => setSearchOption(value)}
               style={{ width: 200 }}
             >
-              <Option value="name">Tìm Theo Tên Danh Mục</Option>
+              <Option value="name">Tìm Theo Tên Tài Khoản</Option>
               <Option value="id">Tìm Theo ID</Option>
+              <Option value="position">Tìm Theo Chức Vụ</Option>
             </Select>
           </Col>
           <Col>
-            <Link to="/categories/createcategory">
+            <Link to="/accounts/createaccount">
               <AddButton onClick={() => {}} label="Thêm mới +" />
             </Link>
           </Col>
@@ -186,4 +192,4 @@ function CategoryPage() {
   );
 }
 
-export default CategoryPage;
+export default AccountPage;

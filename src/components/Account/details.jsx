@@ -2,27 +2,28 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { Form, Input, Button, Typography, Layout } from "antd";
 import axios from "axios";
-import { ENDPOINTS } from "../../constants/common";
+import { ENDPOINTS, POSITION } from "../../constants/common";
 import { ArrowLeftIcon } from "lucide-react";
+import  DropdownList  from "../../components/drop-down-list";
 
 const { Title, Text } = Typography;
 const { Content } = Layout;
 
-function CategoryDetailsPage() {
+function AccountDetailsPage() {
   const [form] = Form.useForm();
   const { id } = useParams(); // Kiểm tra có ID để xác định sửa hay thêm mới
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [categoryData, setCategoryData] = useState(null);
+  const [accountData, setAccountData] = useState(null);
 
   useEffect(() => {
     if (id) {
       // Nếu có ID, tức là sửa, gọi API để lấy dữ liệu
       axios
-        .get(`${ENDPOINTS.CATEGORIES}/${id}`)
+        .get(`${ENDPOINTS.ACCOUNTS}/${id}`)
         .then((res) => {
-          setCategoryData(res.data);
-          form.setFieldsValue(res.data); // Đổ dữ liệu vào form khi sửa
+          setAccountData(res.data);
+          form.setFieldsValue({...res.data, password: ""}); // Đổ dữ liệu vào form khi sửa
         })
         .catch((err) => console.log(err));
     }
@@ -33,18 +34,18 @@ function CategoryDetailsPage() {
     if (id) {
       // Nếu có ID, tức là đang sửa
       axios
-        .put(`${ENDPOINTS.CATEGORIES}/${id}`, values)
+        .put(`${ENDPOINTS.ACCOUNTS}/${id}`, values)
         .then(() => {
-          navigate("/categories");
+          navigate("/accounts");
         })
         .catch((err) => console.log(err))
         .finally(() => setIsLoading(false));
     } else {
       // Nếu không có ID, tức là đang thêm mới
       axios
-        .post(ENDPOINTS.CATEGORIES, values)
+        .post(ENDPOINTS.ACCOUNTS, values)
         .then(() => {
-          navigate("/categories");
+          navigate("/accounts");
         })
         .catch((err) => console.log(err))
         .finally(() => setIsLoading(false));
@@ -62,26 +63,58 @@ function CategoryDetailsPage() {
             marginBottom: "20px",
           }}
         >
-          <Link to="/categories">
+          <Link to="/accounts">
             <ArrowLeftIcon size={18} />
             <Text style={{ marginLeft: "8px" }}>Quay lại</Text>
           </Link>
         </div>
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
-          <Title level={2}>{id ? "Sửa Danh Mục" : "Thêm Danh Mục"}</Title>
+          <Title level={2}>{id ? "SỬA TÀI KHOẢN" : "THÊM TÀI KHOẢN"}</Title>
         </div>
         <Form
           form={form}
           layout="vertical"
           onFinish={onFinish}
-          initialValues={categoryData}
+          initialValues={accountData}
         >
           <Form.Item
-            label="Tên danh mục"
-            name="categoryName"
-            rules={[{ required: true, message: "Vui lòng nhập tên danh mục" }]}
+            label="Username"
+            name="username"
+            rules={[{ required: true, message: "Vui lòng nhập tên tài khoản" }]}
           >
-            <Input placeholder="Nhập tên danh mục" />
+            <Input
+              placeholder="Nhập tên tài khoản"
+              disabled={!!id} //disable khi có id
+            />
+          </Form.Item>
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: id
+                  ? "Vui lòng nhập mật khẩu cũ hoặc mật khẩu mới"
+                  : "Vui lòng nhập mật khẩu",
+              },
+            ]}
+          >
+            <Input.Password placeholder="Nhập mật khẩu" />
+          </Form.Item>
+          <Form.Item
+            label="Position"
+            name="position"
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập chức vụ",
+              },
+            ]}
+          >
+            <DropdownList
+              dataSource={POSITION} // Truyền POSITION vào DropdownList
+              placeholder="Chọn chức vụ"
+            />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={isLoading}>
@@ -94,4 +127,4 @@ function CategoryDetailsPage() {
   );
 }
 
-export default CategoryDetailsPage;
+export default AccountDetailsPage;

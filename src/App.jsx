@@ -13,11 +13,10 @@ import UpdateProduct from "./components/product/crud/UpdateProduct";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./components/Authentication/login/login";
 import { PropTypes } from "prop-types";
-import AccountList from "./components/Account/AccountList";
-import CreateAccount from "./components/Account/CreateAccount";
-import UpdateAccount from "./components/Account/UpdateAccount";
-import CategoryList from "./components/Catogories/index";
-import CategoryDetails from "./components/Catogories/details";
+import AccountList from "./components/Account";
+import AccountDetailsPage from "./components/Account/details";
+import CategoryPage from "./components/Catogories/index";
+import CategoryDetailsPage from "./components/Catogories/details";
 import Order from "./components/Transactions/OrderList";
 import OrderDetail from "./components/Transactions/InfoOrder";
 
@@ -33,7 +32,7 @@ function App() {
 
   return (
     <MantineProvider
-      theme={{ colorScheme: "light" }} 
+      theme={{ colorScheme: "light" }}
       withGlobalStyles
       withNormalizeCSS
     >
@@ -84,18 +83,24 @@ function App() {
 
             {/* ACCOUNT */}
             <Route path="/accounts" element={<AccountList />} />
-            <Route path="/accounts/createaccount" element={<CreateAccount />} />
-            <Route path="/accounts/update/:id" element={<UpdateAccount />} />
+            <Route
+              path="/accounts/createaccount"
+              element={<AccountDetailsPage />}
+            />
+            <Route
+              path="/accounts/update/:id"
+              element={<AccountDetailsPage />}
+            />
 
             {/* CATEGORY */}
-            <Route path="/categories" element={<CategoryList />} />
+            <Route path="/categories" element={<CategoryPage />} />
             <Route
               path="/categories/createcategory"
-              element={<CategoryDetails />}
+              element={<CategoryDetailsPage />}
             />
             <Route
               path="/categories/update/:id"
-              element={<CategoryDetails />}
+              element={<CategoryDetailsPage />}
             />
 
             {/* ORDER */}
