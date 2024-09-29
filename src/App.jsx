@@ -6,10 +6,10 @@ import {
   Navigate,
 } from "react-router-dom";
 import BaseLayout from "./layout/BaseLayout";
-import { MantineProvider } from "@mantine/core"; // Import MantineProvider
-import { Dashboard, PageNotFound, Product } from "./screens";
-import CreateProduct from "./components/product/crud/CreateProduct";
-import UpdateProduct from "./components/product/crud/UpdateProduct";
+import { MantineProvider } from "@mantine/core";
+import { Dashboard, PageNotFound } from "./screens";
+import ProductPage from "./components/product/index";
+import ProductDetailsPage from "./components/product/details";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./components/Authentication/login/login";
 import { PropTypes } from "prop-types";
@@ -53,32 +53,14 @@ function App() {
             />
 
             {/* PRODUCT */}
-            <Route
-              path="/products"
-              element={
-                <PrivateRoute>
-                  {" "}
-                  <Product />{" "}
-                </PrivateRoute>
-              }
-            />
+            <Route path="/products" element={<ProductPage />} />
             <Route
               path="/products/createproduct"
-              element={
-                <PrivateRoute>
-                  {" "}
-                  <CreateProduct />{" "}
-                </PrivateRoute>
-              }
+              element={<ProductDetailsPage />}
             />
             <Route
-              path="/products/updateproduct/:id"
-              element={
-                <PrivateRoute>
-                  {" "}
-                  <UpdateProduct />{" "}
-                </PrivateRoute>
-              }
+              path="/products/update/:id"
+              element={<ProductDetailsPage />}
             />
 
             {/* ACCOUNT */}
