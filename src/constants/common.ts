@@ -6,6 +6,7 @@ export const ENDPOINTS = Object.freeze({
     //account
     ACCOUNTS: `${ROOT_URL}api/accounts`,
     //product
+    PRODUCTS: `${ROOT_URL}api/products`,
     //category
     CATEGORIES: `${ROOT_URL}api/categories`,
     //order
