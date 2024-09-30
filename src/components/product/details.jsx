@@ -4,6 +4,8 @@ import { Form, Input, Button, Typography, Layout, Image, Row, Col } from "antd";
 import axios from "axios";
 import { ENDPOINTS } from "../../constants/common";
 import { ArrowLeftIcon } from "lucide-react";
+import DropdownList from './../drop-down-list';
+
 
 const { Title, Text } = Typography;
 const { Content } = Layout;
@@ -15,8 +17,10 @@ function ProductDetailsPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [productData, setProductData] = useState(null);
   const [imageUrl, setImageUrl] = useState(""); // State cho URL ảnh
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+    fetchCategories();
     if (id) {
       // Nếu có ID, tức là sửa, gọi API để lấy dữ liệu
       axios
@@ -29,12 +33,28 @@ function ProductDetailsPage() {
           setImageUrl(initialImageUrl); // Đặt URL ảnh
           form.setFieldsValue({
             ...product,
+            categoryId: product.Category?.id,
             toppings: product.toppings || [], // Gán topping nếu có
+            imageUrl: initialImageUrl, // Đồng bộ giá trị imageUrl với form
           });
         })
         .catch((err) => console.log(err));
     }
   }, [id, form]);
+
+  const fetchCategories = () => {
+    axios
+    .get(ENDPOINTS.CATEGORIES)
+    .then((res) => {
+      setCategories(
+        res.data.map((category) => ({
+          value: category.id,
+          label: category.categoryName,
+        }))
+      );
+    })
+    .catch((err) => console.log(err))
+  }
 
   const onFinish = (values) => {
     setIsLoading(true);
@@ -44,7 +64,7 @@ function ProductDetailsPage() {
       fullName: "", // Thêm trường fullName
       description: values.description,
       basePrice: parseFloat(values.basePrice).toFixed(2), // Đảm bảo giá là số
-      categoryId: productData?.Category?.id, // Gán categoryId từ productData
+      categoryId: values.categoryId, // Gán categoryId từ productData
       images: [{ url: values.imageUrl, position: 1 }], // Gán hình ảnh
       toppings: values.toppings || [], // Đảm bảo toppings được gửi đúng định dạng
     };
@@ -131,11 +151,19 @@ function ProductDetailsPage() {
             </Col>
 
             <Col span={12}>
-              {productData?.Category && (
-                <Form.Item label="Danh mục">
-                  <Input value={productData.Category.categoryName} disabled />
-                </Form.Item>
-              )}
+              <Form.Item
+                label="Danh mục"
+                name="categoryId"
+                rules={[{ required: true, message: "Vui lòng chọn danh mục" }]}
+              >
+                <DropdownList
+                  dataSource={categories}
+                  value={form.getFieldValue("categoryId")}
+                  onChange={(value) =>
+                    form.setFieldsValue({ categoryId: value })
+                  }
+                />
+              </Form.Item>
             </Col>
 
             <Col span={24}>
