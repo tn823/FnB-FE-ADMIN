@@ -36,6 +36,7 @@ function ProductDetailsPage() {
             categoryId: product.Category?.id,
             toppings: product.toppings || [], // Gán topping nếu có
             imageUrl: initialImageUrl, // Đồng bộ giá trị imageUrl với form
+            basePrice: formatCurrency(product.basePrice),
           });
         })
         .catch((err) => console.log(err));
@@ -63,7 +64,7 @@ function ProductDetailsPage() {
       name: values.name,
       fullName: "", // Thêm trường fullName
       description: values.description,
-      basePrice: parseFloat(values.basePrice).toFixed(2), // Đảm bảo giá là số
+      basePrice: parseInt(parseCurrency(values.basePrice), 10), // Đảm bảo giá là số
       categoryId: values.categoryId, // Gán categoryId từ productData
       images: [{ url: values.imageUrl, position: 1 }], // Gán hình ảnh
       toppings: values.toppings || [], // Đảm bảo toppings được gửi đúng định dạng
@@ -89,6 +90,16 @@ function ProductDetailsPage() {
   };
   const handleImageUrlChange = (e) => {
     setImageUrl(e.target.value); // Cập nhật URL ảnh mỗi khi người dùng thay đổi input
+  };
+
+  const formatCurrency = (value) => {
+    if (!value) return "";
+    const number = typeof value === "string" ? parseFloat(value.replace(/[^\d.-]/g,"")) : value;
+    return number.toLocaleString("vi-VN", { maximumFractionDigits: 0 });
+  };
+
+  const parseCurrency = (value) => {
+    return parseInt(value.replace(/\D/g, ""), 10)
   };
 
   return (
@@ -140,7 +151,17 @@ function ProductDetailsPage() {
                   },
                 ]}
               >
-                <Input placeholder="Nhập giá" />
+                <Input
+                  placeholder="Nhập giá"
+                  onChange={(e) => {
+                    const formattedValue = formatCurrency(
+                      parseCurrency(e.target.value)
+                    );
+                    form.setFieldsValue({
+                      basePrice: formattedValue,
+                    });
+                  }}
+                />
               </Form.Item>
             </Col>
 
