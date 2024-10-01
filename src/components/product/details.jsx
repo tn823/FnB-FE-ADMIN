@@ -183,6 +183,7 @@ function ProductDetailsPage() {
                   onChange={(value) =>
                     form.setFieldsValue({ categoryId: value })
                   }
+                  placeholder="Nhập danh mục"
                 />
               </Form.Item>
             </Col>

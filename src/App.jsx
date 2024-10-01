@@ -8,17 +8,19 @@ import {
 import BaseLayout from "./layout/BaseLayout";
 import { MantineProvider } from "@mantine/core";
 import { Dashboard, PageNotFound } from "./screens";
-import ProductPage from "./components/product/index";
-import ProductDetailsPage from "./components/product/details";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./components/Authentication/login/login";
 import { PropTypes } from "prop-types";
+import ProductPage from "./components/product/index";
+import ProductDetailsPage from "./components/product/details";
 import AccountList from "./components/Account";
 import AccountDetailsPage from "./components/Account/details";
 import CategoryPage from "./components/Catogories/index";
 import CategoryDetailsPage from "./components/Catogories/details";
 import Order from "./components/Transactions/OrderList";
 import OrderDetail from "./components/Transactions/InfoOrder";
+import ToppingPage from './components/Topping/index';
+import ToppingDetailPage from './components/Topping/details';
 
 function App() {
   const PrivateRoute = ({ children }) => {
@@ -61,6 +63,17 @@ function App() {
             <Route
               path="/products/update/:id"
               element={<ProductDetailsPage />}
+            />
+
+            {/* TOPPING */}
+            <Route path="/toppings" element={<ToppingPage />} />
+            <Route
+              path="/toppings/createtopping"
+              element={<ToppingDetailPage />}
+            />
+            <Route
+              path="/toppings/update/:id"
+              element={<ToppingDetailPage />}
             />
 
             {/* ACCOUNT */}

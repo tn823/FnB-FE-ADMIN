@@ -6,44 +6,59 @@ import { ENDPOINTS } from "../../constants/common";
 import { Trash2 } from "lucide-react";
 import { Group } from "@mantine/core";
 import AddButton from "../Button/AddButton";
-import ConfirmDeleteModal from './../../modal/delete';
+import ConfirmDeleteModal from "../../modal/delete";
 
 const { Search } = Input;
 const { Option } = Select;
 const { Title } = Typography;
 const { Content } = Layout;
 
-function AccountPage() {
+function ToppingPage() {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOption, setSearchOption] = useState("name");
   const [errorMessage, setErrorMessage] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedAccount, setSelectedAccount] = useState(null);
+  const [selectedTopping, setSelectedTopping] = useState(null);
   const navigate = useNavigate();
 
-  const fetchAccounts = () => {
+  const formatCurrency = (value) => {
+    if (!value) return "";
+    // Ensure value is a number
+    const number =
+      typeof value === "string"
+        ? parseFloat(value.replace(/[^\d.-]/g, ""))
+        : value;
+    // Format with thousands separator and no decimal places
+    return number.toLocaleString("vi-VN", { maximumFractionDigits: 0 });
+  };
+
+  const fetchToppings = () => {
     axios
-      .get(ENDPOINTS.ACCOUNTS)
+      .get(ENDPOINTS.TOPPINGS)
       .then((res) => {
-        setData(res.data);
+        const formattedData = res.data.map((topping) => ({
+          ...topping,
+          formattedBasePrice: formatCurrency(topping.basePrice),
+        }));
+        setData(formattedData);
         setErrorMessage("");
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    fetchAccounts();
+    fetchToppings();
   }, []);
 
   useEffect(() => {
     if (searchTerm === "") {
-      fetchAccounts();
+      fetchToppings();
     } else {
       const url =
         searchOption === "id"
-          ? `${ENDPOINTS.ACCOUNTS}/${searchTerm}`
-          : `${ENDPOINTS.ACCOUNTS}/${searchOption}/${searchTerm}`;
+          ? `${ENDPOINTS.TOPPINGS}/${searchTerm}`
+          : `${ENDPOINTS.TOPPINGS}/${searchOption}/${searchTerm}`;
 
       axios
         .get(url)
@@ -51,11 +66,15 @@ function AccountPage() {
           const resultData = Array.isArray(res.data) ? res.data : [res.data];
           if (resultData.length === 0) {
             setErrorMessage(
-              `Không tìm thấy tài khoản với ${searchOption} là "${searchTerm}"`
+              `Không tìm thấy món thêm với ${searchOption} là "${searchTerm}"`
             );
             setData([]);
           } else {
-            setData(resultData);
+            const formattedData = resultData.map((topping) => ({
+              ...topping,
+              formattedBasePrice: formatCurrency(topping.basePrice),
+            }));
+            setData(formattedData);
             setErrorMessage("");
           }
         })
@@ -66,35 +85,32 @@ function AccountPage() {
     }
   }, [searchTerm, searchOption]);
 
-  const showDeleteConfirm = (account) => {
-    setSelectedAccount(account); // Lưu tài khoản muốn xóa
-    setIsModalVisible(true); // Hiển thị modal
+  const showDeleteConfirm = (topping) => {
+    setSelectedTopping(topping);
+    setIsModalVisible(true);
   };
 
-
   const handleConfirmDelete = () => {
-    if (selectedAccount) {
+    if (selectedTopping) {
       axios
-        .delete(`${ENDPOINTS.ACCOUNTS}/${selectedAccount.id}`)
+        .delete(`${ENDPOINTS.TOPPINGS}/${selectedTopping.id}`)
         .then(() => {
-          fetchAccounts();
+          fetchToppings();
         })
         .catch((err) => {
-          console.error("Lỗi khi xóa tài khoản:", err);
+          console.error("Lỗi khi xóa món thêm:", err);
         });
     }
-    setIsModalVisible(false); // Ẩn modal sau khi xóa
+    setIsModalVisible(false);
   };
 
   const handleCancelDelete = () => {
-    setIsModalVisible(false); // Ẩn modal
-    setSelectedAccount(null); // Xóa tài khoản được chọn
+    setIsModalVisible(false);
+    setSelectedTopping(null);
   };
 
-
-
   const handleRowClick = (id) => {
-    navigate(`/accounts/update/${id}`);
+    navigate(`/toppings/update/${id}`);
   };
 
   const columns = [
@@ -104,18 +120,15 @@ function AccountPage() {
       key: "id",
     },
     {
-      title: (
-        <span style={{ fontSize: "16px", fontWeight: "bold" }}>Tên Tài Khoản</span>
-      ),
-      dataIndex: "username",
-      key: "username",
+      title: <span style={{ fontSize: "16px", fontWeight: "bold" }}>Tên</span>,
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: (
-        <span style={{ fontSize: "16px", fontWeight: "bold" }}>Chức Vụ</span>
-      ),
-      dataIndex: "position",
-      key: "position",
+      title: <span style={{ fontSize: "16px", fontWeight: "bold" }}>Giá</span>,
+      dataIndex: "formattedBasePrice",
+      key: "basePrice",
+      render: (formattedBasePrice) => `${formattedBasePrice}`,
     },
     {
       title: (
@@ -153,7 +166,7 @@ function AccountPage() {
     <Layout style={{ padding: "20px" }}>
       <Content>
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
-          <Title level={2}>QUẢN LÝ TÀI KHOẢN</Title>
+          <Title level={2}>QUẢN LÝ MÓN THÊM</Title>
         </div>
         <Row
           justify="center"
@@ -176,13 +189,12 @@ function AccountPage() {
               onChange={(value) => setSearchOption(value)}
               style={{ width: 200 }}
             >
-              <Option value="name">Tìm Theo Tên Tài Khoản</Option>
-              <Option value="id">Tìm Theo ID</Option>
-              <Option value="position">Tìm Theo Chức Vụ</Option>
+              <Option value="name">Tìm Theo Tên</Option>
+              <Option value="id">Tìm Theo ID Sản Phẩm</Option>
             </Select>
           </Col>
           <Col>
-            <Link to="/accounts/createaccount">
+            <Link to="/toppings/createtopping">
               <AddButton onClick={() => {}} label="Thêm mới +" />
             </Link>
           </Col>
@@ -202,7 +214,7 @@ function AccountPage() {
           visible={isModalVisible}
           onConfirm={handleConfirmDelete}
           onCancel={handleCancelDelete}
-          title={selectedAccount ? selectedAccount.username : ""} // Hiển thị tên tài khoản trong modal
+          title={selectedTopping ? selectedTopping.name : ""}
         />
         {errorMessage && (
           <div style={{ color: "red", textAlign: "center", marginTop: "10px" }}>
@@ -214,4 +226,4 @@ function AccountPage() {
   );
 }
 
-export default AccountPage;
+export default ToppingPage;
