@@ -7,6 +7,8 @@ export const ENDPOINTS = Object.freeze({
     ACCOUNTS: `${ROOT_URL}api/accounts`,
     //product
     PRODUCTS: `${ROOT_URL}api/products`,
+    //topping
+    TOPPINGS: `${ROOT_URL}api/toppings`,
     //category
     CATEGORIES: `${ROOT_URL}api/categories`,
     //order
