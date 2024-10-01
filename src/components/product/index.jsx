@@ -22,11 +22,30 @@ function ProductPage() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const navigate = useNavigate();
 
+  const formatCurrency = (value) => {
+    if (!value) return "";
+    // Ensure value is a number
+    const number =
+      typeof value === "string"
+        ? parseFloat(value.replace(/[^\d.-]/g, ""))
+        : value;
+    // Format with thousands separator and no decimal places
+    return number.toLocaleString("vi-VN", { maximumFractionDigits: 0 });
+  };
+
   const fetchProducts = () => {
     axios
       .get(ENDPOINTS.PRODUCTS)
       .then((res) => {
-        setData(res.data);
+        const formattedData = res.data.map((product) => ({
+          ...product,
+          formattedBasePrice: formatCurrency(product.basePrice),
+          Toppings: product.Toppings?.map((topping) => ({
+            ...topping,
+            formattedBasePrice: formatCurrency(topping.basePrice),
+          })),
+        }));
+        setData(formattedData);
         setErrorMessage("");
       })
       .catch((err) => console.log(err));
@@ -55,7 +74,15 @@ function ProductPage() {
             );
             setData([]);
           } else {
-            setData(resultData);
+            const formattedData = resultData.map((product) => ({
+              ...product,
+              formattedBasePrice: formatCurrency(product.basePrice),
+              Toppings: product.Toppings?.map((topping) => ({
+                ...topping,
+                formattedBasePrice: formatCurrency(topping.basePrice),
+              })),
+            }));
+            setData(formattedData);
             setErrorMessage("");
           }
         })
@@ -67,7 +94,7 @@ function ProductPage() {
   }, [searchTerm, searchOption]);
 
   const showDeleteConfirm = (product) => {
-    setSelectedProduct(product); 
+    setSelectedProduct(product);
     setIsModalVisible(true);
   };
 
@@ -82,12 +109,12 @@ function ProductPage() {
           console.error("Lỗi khi xóa sản phẩm:", err);
         });
     }
-    setIsModalVisible(false); 
+    setIsModalVisible(false);
   };
 
   const handleCancelDelete = () => {
-    setIsModalVisible(false); 
-    setSelectedProduct(null); 
+    setIsModalVisible(false);
+    setSelectedProduct(null);
   };
 
   const handleRowClick = (id) => {
@@ -121,8 +148,9 @@ function ProductPage() {
     },
     {
       title: <span style={{ fontSize: "16px", fontWeight: "bold" }}>Giá</span>,
-      dataIndex: "basePrice",
+      dataIndex: "formattedBasePrice",
       key: "basePrice",
+      render: (formattedBasePrice) => `${formattedBasePrice}`,
     },
     {
       title: (
@@ -132,22 +160,10 @@ function ProductPage() {
       render: (_, record) =>
         record.Toppings?.map((topping) => (
           <div key={topping.id}>
-            {topping.name} - {topping.basePrice} VND
+            {topping.name} - {topping.formattedBasePrice}
           </div>
         )) || "Không có toppings",
     },
-    // {
-    //   title: (
-    //     <span style={{ fontSize: "16px", fontWeight: "bold" }}>Thuộc tính</span>
-    //   ),
-    //   key: "Attributes",
-    //   render: (_, record) =>
-    //     record.Attributes?.map((attr) => (
-    //       <div key={attr.id}>
-    //         {attr.attributeName}: {attr.attributeValue}
-    //       </div>
-    //     )) || "Không có thuộc tính",
-    // },
     {
       title: (
         <span style={{ fontSize: "16px", fontWeight: "bold" }}>Tùy Chỉnh</span>
@@ -209,7 +225,6 @@ function ProductPage() {
             >
               <Option value="name">Tìm Theo Tên</Option>
               <Option value="id">Tìm Theo ID</Option>
-              {/* <Option value="position">Tìm Theo Chức Vụ</Option> */}
             </Select>
           </Col>
           <Col>
@@ -233,7 +248,7 @@ function ProductPage() {
           visible={isModalVisible}
           onConfirm={handleConfirmDelete}
           onCancel={handleCancelDelete}
-          title={selectedProduct ? selectedProduct.name : ""} 
+          title={selectedProduct ? selectedProduct.name : ""}
         />
         {errorMessage && (
           <div style={{ color: "red", textAlign: "center", marginTop: "10px" }}>
