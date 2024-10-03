@@ -17,8 +17,8 @@ import AccountList from "./components/Account";
 import AccountDetailsPage from "./components/Account/details";
 import CategoryPage from "./components/Catogories/index";
 import CategoryDetailsPage from "./components/Catogories/details";
-import Order from "./components/Transactions/OrderList";
-import OrderDetail from "./components/Transactions/InfoOrder";
+import OrderPage from "./components/Order/index";
+import OrderDetailPage from "./components/Order/details";
 import ToppingPage from './components/Topping/index';
 import ToppingDetailPage from './components/Topping/details';
 
@@ -99,8 +99,8 @@ function App() {
             />
 
             {/* ORDER */}
-            <Route path="/orders" element={<Order />} />
-            <Route path="/orders/:id" element={<OrderDetail />} />
+            <Route path="/orders" element={<OrderPage />} />
+            <Route path="/orders/:id" element={<OrderDetailPage />} />
 
             <Route path="*" element={<PageNotFound />} />
           </Route>
