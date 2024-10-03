@@ -27,10 +27,23 @@ function OrderPage() {
 
   const formatDateTime = (dateTime) => {
     const date = new Date(dateTime);
-    const formattedDate = date.toLocaleDateString("vi-VN");
-    const formattedTime = date.toLocaleTimeString("vi-VN");
+
+    const localDate = new Date(date.getTime() + 7*60*60*1000);
+
+    const formattedDate = localDate.toLocaleDateString("vi-VN", {
+      timeZone: "Asia/Ho_Chi_Minh", // Đặt đúng múi giờ Việt Nam
+    });
+
+    const formattedTime = localDate.toLocaleTimeString("vi-VN", {
+      timeZone: "Asia/Ho_Chi_Minh", // Đặt đúng múi giờ Việt Nam
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+
     return `${formattedTime} ${formattedDate}`;
   };
+
 
   const fetchOrders = () => {
     axios

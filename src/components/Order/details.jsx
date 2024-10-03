@@ -10,13 +10,15 @@ import {
   Divider,
   message,
   Button,
+  Row,
+  Col
 } from "antd";
 import axios from "axios";
 import { ENDPOINTS } from "../../constants/common";
 import { ArrowLeftIcon, PrinterIcon } from "lucide-react";
 import ConfirmButton from "../Button/ConfirmButton";
 import CancelButton from "../Button/CancelButton";
-import { useReactToPrint } from "react-to-print";
+import "./style/details.css"
 
 const { Title, Text } = Typography;
 const { Content } = Layout;
@@ -28,10 +30,26 @@ function OrderDetailsPage() {
   const [orderData, setOrderData] = useState(null);
   const componentRef = useRef();
 
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
+  
+    const formatDateTime = (dateTime) => {
+      const date = new Date(dateTime);
 
+      // Cộng thêm 7 giờ để chuyển từ UTC sang giờ Việt Nam
+      const localDate = new Date(date.getTime() + 7 * 60 * 60 * 1000);
+
+      const formattedDate = localDate.toLocaleDateString("vi-VN", {
+        timeZone: "Asia/Ho_Chi_Minh",
+      });
+
+      const formattedTime = localDate.toLocaleTimeString("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      });
+
+      return `${formattedTime} ${formattedDate}`;
+    };
+  
   useEffect(() => {
     if (id) {
       setIsLoading(true);
@@ -41,7 +59,7 @@ function OrderDetailsPage() {
           setOrderData(res.data);
           form.setFieldsValue({
             id: res.data.id,
-            orderDate: new Date(res.data.orderDate).toLocaleString("vi-VN"),
+            orderDate: formatDateTime(res.data.orderDate),
             totalPrice: formatCurrency(res.data.totalPrice),
             note: res.data.note || "Không có ghi chú",
             status: getStatusLabel(res.data.status),
@@ -157,6 +175,22 @@ function OrderDetailsPage() {
       },
     ];
 
+    if (isLoading) {
+      return (
+        <div style={{ textAlign: "center", padding: "50px" }}>
+          <Spin size="large" />
+        </div>
+      );
+    }
+
+    if (!orderData) {
+      return (
+        <div style={{ textAlign: "center", padding: "50px" }}>
+          <Text>Không có dữ liệu đơn hàng</Text>
+        </div>
+      );
+    }
+
     return (
       <Table
         dataSource={dataSource}
@@ -188,7 +222,6 @@ function OrderDetailsPage() {
       return (
         <Button
           icon={<PrinterIcon size={18} />}
-          onClick={handlePrint}
           style={{ marginTop: "20px" }}
         >
           In hóa đơn
@@ -236,24 +269,38 @@ function OrderDetailsPage() {
         </div>
         <div ref={componentRef} style={{ padding: "20px", background: "#fff" }}>
           <Form form={form} layout="vertical">
-            <Form.Item label="Mã HĐ" name="id">
-              <Input disabled />
-            </Form.Item>
-            <Form.Item label="Kiểu thanh toán" name="paymentType">
-              <Input disabled />
-            </Form.Item>
-            <Form.Item label="Ngày đặt hàng" name="orderDate">
-              <Input disabled />
-            </Form.Item>
-            <Form.Item label="Tổng tiền" name="totalPrice">
-              <Input disabled />
-            </Form.Item>
-            <Form.Item label="Ghi chú" name="note">
-              <Input disabled />
-            </Form.Item>
-            <Form.Item label="Trạng thái" name="status">
-              <Input disabled />
-            </Form.Item>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item label="Mã HĐ" name="id">
+                  <Input disabled className="custom-disabled-input" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="Kiểu thanh toán" name="paymentType">
+                  <Input disabled className="custom-disabled-input" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="Ngày đặt hàng" name="orderDate">
+                  <Input disabled className="custom-disabled-input"/>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="Tổng tiền" name="totalPrice">
+                  <Input disabled className="custom-disabled-input"/>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="Ghi chú" name="note">
+                  <Input disabled className="custom-disabled-input"/>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="Trạng thái" name="status">
+                  <Input disabled className="custom-disabled-input"/>
+                </Form.Item>
+              </Col>
+            </Row>
           </Form>
           <Divider />
           <Title level={4}>Chi Tiết Sản Phẩm</Title>
