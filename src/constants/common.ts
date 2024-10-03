@@ -12,9 +12,16 @@ export const ENDPOINTS = Object.freeze({
     //category
     CATEGORIES: `${ROOT_URL}api/categories`,
     //order
+    ORDERS: `${ROOT_URL}api/orders`
 });
 
 export const POSITION = Object.freeze([
   { value: 'ADMIN', label: 'ADMIN' },
   { value: 'STAFF', label: 'STAFF' }
+])
+
+export const ORDER_STATUS = Object.freeze([
+  {value: "1", label: "Đang đợi xử lý"},
+  {value: "2", label: "Thanh toán thành công"},
+  {value: "3", label: "Đơn đã hủy"}
 ])
