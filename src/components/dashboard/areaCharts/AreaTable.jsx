@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import "./AreaTable.scss";
+import "./style/AreaTable.scss";
+import { ENDPOINTS } from "../../../constants/common";
+import { FaEye } from "react-icons/fa";
 
-const TABLE_HEADS = ["Order ID", "Date", "Status", "Amount", "Actions"];
+const TABLE_HEADS = ["Mã HĐ", "Thời gian", "Trạng thái", "Giá", "Tùy chọn"];
 
 const AreaTable = () => {
   const [tableData, setTableData] = useState([]);
@@ -9,9 +11,7 @@ const AreaTable = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch(
-          "https://node-be-api.vercel.app/api/orders"
-        );
+        const response = await fetch(ENDPOINTS.ORDERS);
         const data = await response.json();
         setTableData(data);
       } catch (error) {
@@ -50,7 +50,9 @@ const AreaTable = () => {
   return (
     <section className="content-area-table">
       <div className="data-table-info">
-        <h4 className="data-table-title">Latest Orders</h4>
+        <h4 className="data-table-title">
+          <b>Đơn Mới Nhất</b>
+        </h4>
       </div>
       <div className="data-table-diagram">
         <table>
@@ -80,12 +82,10 @@ const AreaTable = () => {
                 </td>
                 <td>${parseFloat(order.totalPrice).toFixed(2)}</td>
                 <td className="dt-cell-action">
-                  <a
-                    href={`/order-details/${order.id}`}
+                  <FaEye
+                    href={`/orders/${order.id}`}
                     className="view-details-link"
-                  >
-                    View Details
-                  </a>
+                  ></FaEye>
                 </td>
               </tr>
             ))}

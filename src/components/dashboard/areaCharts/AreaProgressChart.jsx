@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { ENDPOINTS } from "../../../constants/common";
+import "./style/AreaProgressChart.css"
 
 const AreaProgressChart = () => {
   const [data, setData] = useState([]);
@@ -7,9 +9,7 @@ const AreaProgressChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://node-be-api.vercel.app/api/orders"
-        );
+        const response = await axios.get(ENDPOINTS.ORDERS);
         const orders = response.data;
 
         const productCount = {};
@@ -52,31 +52,33 @@ const AreaProgressChart = () => {
   }, []);
 
   return (
-    <div className="progress-bar">
-      <div className="progress-bar-info">
-        <h4 className="progress-bar-title">Most Sold Items</h4>
-      </div>
-      <div className="progress-bar-list">
-        {data?.map((progressbar) => {
-          return (
-            <div className="progress-bar-item" key={progressbar.id}>
-              <div className="bar-item-info">
-                <p className="bar-item-info-name">{progressbar.name}</p>
-                <p className="bar-item-info-value">{progressbar.count}</p>
+    <section className="content-area-progresschart">
+      <div className="progress-bar">
+        <div className="progress-bar-info">
+          <h4 className="progress-bar-title">Most Sold Items</h4>
+        </div>
+        <div className="progress-bar-list">
+          {data?.map((progressbar) => {
+            return (
+              <div className="progress-bar-item" key={progressbar.id}>
+                <div className="bar-item-info">
+                  <p className="bar-item-info-name">{progressbar.name}</p>
+                  <p className="bar-item-info-value">{progressbar.count}</p>
+                </div>
+                <div className="bar-item-full">
+                  <div
+                    className="bar-item-filled"
+                    style={{
+                      width: `${(progressbar.count / data[0].count) * 100}%`,
+                    }}
+                  ></div>
+                </div>
               </div>
-              <div className="bar-item-full">
-                <div
-                  className="bar-item-filled"
-                  style={{
-                    width: `${(progressbar.count / data[0].count) * 100}%`,
-                  }}
-                ></div>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

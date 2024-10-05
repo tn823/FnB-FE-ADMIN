@@ -11,7 +11,7 @@ import {
 import { ThemeContext } from "../../../context/ThemeContext";
 import { FaArrowUpLong } from "react-icons/fa6";
 import { LIGHT_THEME } from "../../../constants/themeConstants";
-import "./AreaCharts.scss";
+import "./style/AreaCharts.scss";
 
 const data = [
   {
