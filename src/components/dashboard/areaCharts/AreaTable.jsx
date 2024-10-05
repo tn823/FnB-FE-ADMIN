@@ -23,28 +23,44 @@ const AreaTable = () => {
   }, []);
 
   const formatDateTime = (dateString) => {
-    const options = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    };
-    return new Date(dateString).toLocaleDateString(undefined, options);
+    const date = new Date(dateString);
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const seconds = date.getSeconds().toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+
+    return `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`;
   };
 
-  const getStatusText = (status) => {
+  const formatCurrency = (amount) => {
+    return amount
+      .toLocaleString("vi-VN", { style: "currency", currency: "VND" })
+      .replace("₫", "")
+      .trim();
+  };
+
+  const getStatusInfo = (status) => {
+    let color, label;
     switch (status) {
       case 1:
-        return "Done";
+        color = "orange";
+        label = "Đang đợi xử lý";
+        break;
       case 2:
-        return "Doing";
+        color = "green";
+        label = "Thanh toán thành công";
+        break;
       case 3:
-        return "Waiting";
+        color = "red";
+        label = "Đơn đã hủy";
+        break;
       default:
-        return "Unknown";
+        color = "gray";
+        label = "Không xác định";
     }
+    return { color, label };
   };
 
   return (
@@ -64,31 +80,33 @@ const AreaTable = () => {
             </tr>
           </thead>
           <tbody>
-            {tableData.map((order) => (
-              <tr key={order.id}>
-                <td>{order.id}</td>
-                <td>{formatDateTime(order.orderDate)}</td>
-                <td>
-                  <div className="dt-status">
-                    <span
-                      className={`dt-status-dot dot-${getStatusText(
-                        order.status
-                      )}`}
-                    ></span>
-                    <span className="dt-status-text">
-                      {getStatusText(order.status)}
-                    </span>
-                  </div>
-                </td>
-                <td>${parseFloat(order.totalPrice).toFixed(2)}</td>
-                <td className="dt-cell-action">
-                  <FaEye
-                    href={`/orders/${order.id}`}
-                    className="view-details-link"
-                  ></FaEye>
-                </td>
-              </tr>
-            ))}
+            {tableData.map((order) => {
+              const { color, label } = getStatusInfo(order.status);
+              return (
+                <tr key={order.id}>
+                  <td>{order.id}</td>
+                  <td>{formatDateTime(order.orderDate)}</td>
+                  <td>
+                    <div className="dt-status" style={{color: color}}>
+                      <span
+                        className={`dt-status-dot dot-${color}`}
+                        style={{ backgroundColor: color }}
+                      ></span>
+                      <span className="dt-status-text">{label}</span>
+                    </div>
+                  </td>
+                  <td>{formatCurrency(parseFloat(order.totalPrice))}</td>
+                  <td className="dt-cell-action">
+                    <a
+                      href={`/orders/${order.id}`}
+                      className="view-details-link"
+                    >
+                      <FaEye style={{ cursor: "pointer" }} />
+                    </a>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
