@@ -1,19 +1,10 @@
-import "./AreaTop.scss";
+import { Layout } from "antd";
+import "./style/AreaTop.css";
 import { useEffect, useRef, useState } from "react";
+import { Content } from 'antd/es/layout/layout';
 
-import "react-date-range/dist/styles.css"; // main style file
-import "react-date-range/dist/theme/default.css"; // theme css file
-import { addDays } from "date-fns";
-import { DateRange } from "react-date-range";
 
 const AreaTop = () => {
-  const [state, setState] = useState([
-    {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
-      key: "selection",
-    },
-  ]);
 
   const [showDatePicker, setShowDatePicker] = useState(false);
   const dateRangeRef = useRef(null);
@@ -36,28 +27,26 @@ const AreaTop = () => {
   }, []);
 
   return (
-    <section className="content-area-top">
-      <div className="area-top-l">
-        <h2 className="area-top-title">Thống Kê</h2>
-      </div>
-      <div className="area-top-r">
-        <div
-          ref={dateRangeRef}
-          className={`date-range-wrapper ${
-            !showDatePicker ? "hide-date-range" : ""
-          }`}
-          onClick={handleInputClick}
-        >
-          <DateRange
-            editabbleDateInputs={true}
-            onChange={(item) => setState([item.selection])}
-            moveRangeOnFirstSelection={false}
-            ranges={state}
-            showMonthAndYearPickers={false}
-          />
-        </div>
-      </div>
-    </section>
+    <Layout style={{padding:"20px"}}>
+      <Content>
+        <section className="content-area-top">
+          <div className="area-top-l">
+            <h2 className="area-top-title">
+              <b>THỐNG KÊ</b>
+            </h2>
+          </div>
+          <div className="area-top-r">
+            <div
+              ref={dateRangeRef}
+              className={`date-range-wrapper ${
+                !showDatePicker ? "hide-date-range" : ""
+              }`}
+              onClick={handleInputClick}
+            ></div>
+          </div>
+        </section>
+      </Content>
+    </Layout>
   );
 };
 

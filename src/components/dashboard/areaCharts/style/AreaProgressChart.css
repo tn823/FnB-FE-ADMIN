@@ -1,0 +1,6 @@
+.content-area-progresschart {
+    background: var(--secondary-color);
+    border-radius: 5px;
+    box-shadow: var(--light-shadow1);
+    padding: 16px;
+}

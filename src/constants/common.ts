@@ -12,7 +12,8 @@ export const ENDPOINTS = Object.freeze({
     //category
     CATEGORIES: `${ROOT_URL}api/categories`,
     //order
-    ORDERS: `${ROOT_URL}api/orders`
+    ORDERS: `${ROOT_URL}api/orders`,
+    REVENUE_ORDER: `${ROOT_URL}api/orders/revenue/today`
 });
 
 export const POSITION = Object.freeze([
