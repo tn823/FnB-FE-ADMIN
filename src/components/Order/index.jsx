@@ -108,7 +108,9 @@ function OrderPage() {
     },
     {
       title: (
-        <span style={{ fontSize: "16px", fontWeight: "bold" }}>Kiểu thanh toán</span>
+        <span style={{ fontSize: "16px", fontWeight: "bold" }}>
+          Kiểu thanh toán
+        </span>
       ),
       dataIndex: "paymentType",
       key: "paymentType",
@@ -177,7 +179,7 @@ function OrderPage() {
     },
     {
       title: (
-        <span style={{ fontSize: "16px", fontWeight: "bold" }}>Tùy chỉnh</span>
+        <span style={{ fontSize: "16px", fontWeight: "bold" }}>Chức Năng</span>
       ),
       key: "actions",
       width: "150px",
@@ -196,7 +198,7 @@ function OrderPage() {
               type="danger"
               onClick={(e) => {
                 e.stopPropagation();
-                 navigate(`/orders/${record.id}`);
+                navigate(`/orders/${record.id}`);
               }}
             >
               Xóa
