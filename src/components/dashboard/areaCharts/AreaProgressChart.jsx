@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { ENDPOINTS } from "../../../constants/common";
-import "./style/AreaProgressChart.css"
+import "./style/AreaProgressChart.css";
 
 const AreaProgressChart = () => {
   const [data, setData] = useState([]);
@@ -17,32 +17,30 @@ const AreaProgressChart = () => {
         orders.forEach((order) => {
           order.OrderDetails.forEach((detail) => {
             const { productId, name, quantity } = detail;
+
+            // Xử lý sản phẩm chính
             if (!productCount[productId]) {
-              productCount[productId] = { name, count: 0 };
+              productCount[productId] = { id: productId, name, count: 0 }; // Thêm 'id' vào đây
             }
             productCount[productId].count += quantity;
 
+            // Xử lý topping cho mỗi sản phẩm
             detail.OrderDetailToppings.forEach((topping) => {
               const { toppingId, name, quantity } = topping;
               if (!productCount[toppingId]) {
-                productCount[toppingId] = { name, count: 0 };
+                productCount[toppingId] = { id: toppingId, name, count: 0 }; // Thêm 'id' vào đây
               }
               productCount[toppingId].count += quantity;
             });
           });
         });
 
+        // Sắp xếp theo số lượng và giới hạn 8 sản phẩm bán chạy nhất
         const sortedProducts = Object.values(productCount)
           .sort((a, b) => b.count - a.count)
-          .slice(0, 5);
+          .slice(0, 8); // Giới hạn 8 sản phẩm
 
-        setData(
-          sortedProducts.map((product) => ({
-            id: product.id,
-            name: product.name,
-            count: product.count,
-          }))
-        );
+        setData(sortedProducts);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -51,11 +49,12 @@ const AreaProgressChart = () => {
     fetchData();
   }, []);
 
+
   return (
     <section className="content-area-progresschart">
       <div className="progress-bar">
         <div className="progress-bar-info">
-          <h4 className="progress-bar-title"> Top món bán chạy nhất</h4>
+          <h4 className="progress-bar-title">Top món bán chạy nhất</h4>
         </div>
         <div className="progress-bar-list">
           {data?.map((progressbar) => {
@@ -83,65 +82,3 @@ const AreaProgressChart = () => {
 };
 
 export default AreaProgressChart;
-
-// const data = [
-//   {
-//     id: 1,
-//     name: "Burger",
-//     percentValues: 70,
-//   },
-//   {
-//     id: 2,
-//     name: "Shirts",
-//     percentValues: 40,
-//   },
-//   {
-//     id: 3,
-//     name: "Belts",
-//     percentValues: 60,
-//   },
-//   {
-//     id: 4,
-//     name: "Caps",
-//     percentValues: 80,
-//   },
-//   {
-//     id: 5,
-//     name: "Others",
-//     percentValues: 20,
-//   },
-// ];
-
-// const AreaProgressChart = () => {
-//   return (
-//     <div className="progress-bar">
-//       <div className="progress-bar-info">
-//         <h4 className="progress-bar-title">Most Sold Items</h4>
-//       </div>
-//       <div className="progress-bar-list">
-//         {data?.map((progressbar) => {
-//           return (
-//             <div className="progress-bar-item" key={progressbar.id}>
-//               <div className="bar-item-info">
-//                 <p className="bar-item-info-name">{progressbar.name}</p>
-//                 <p className="bar-item-info-value">
-//                   {progressbar.percentValues}
-//                 </p>
-//               </div>
-//               <div className="bar-item-full">
-//                 <div
-//                   className="bar-item-filled"
-//                   style={{
-//                     width: `${progressbar.percentValues}%`,
-//                   }}
-//                 ></div>
-//               </div>
-//             </div>
-//           );
-//         })}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AreaProgressChart;

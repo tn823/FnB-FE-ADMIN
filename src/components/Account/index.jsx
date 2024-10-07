@@ -119,7 +119,7 @@ function AccountPage() {
     },
     {
       title: (
-        <span style={{ fontSize: "16px", fontWeight: "bold" }}>Tùy Chỉnh</span>
+        <span style={{ fontSize: "16px", fontWeight: "bold" }}>Chức Năng</span>
       ),
       key: "actions",
       width: "150px",

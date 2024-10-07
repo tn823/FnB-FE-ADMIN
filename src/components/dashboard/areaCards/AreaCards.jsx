@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import AreaCard from "./AreaCard";
-import "./AreaCards.scss";
+import "./style/AreaCards.scss";
 import axios from "axios";
 import { ENDPOINTS } from "../../../constants/common";
 
@@ -47,7 +47,7 @@ const AreaCards = () => {
         cardInfo={{
           title: "ĐANG ĐỢI",
           value: `${data.pendingOrderCount} Đơn`,
-          text: "Số đơn đang đợi xử lý.",
+          text: "Số đơn đang đợi xử lý hôm nay.",
         }}
       />
     </section>

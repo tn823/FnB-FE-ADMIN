@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import "./style/AreaTable.scss";
+import "./style/AreaTable.css";
 import { ENDPOINTS } from "../../../constants/common";
-import { FaEye } from "react-icons/fa";
 
-const TABLE_HEADS = ["Mã HĐ", "Thời gian", "Trạng thái", "Giá", "Tùy chọn"];
+
+const TABLE_HEADS = ["Mã HĐ", "Thời gian", "Trạng thái", "Giá", ];
 
 const AreaTable = () => {
   const [tableData, setTableData] = useState([]);
@@ -13,7 +13,8 @@ const AreaTable = () => {
       try {
         const response = await fetch(ENDPOINTS.ORDERS);
         const data = await response.json();
-        setTableData(data);
+        const latestOrders = data.slice(0, 10);  // Giới hạn 10 đơn hàng mới nhất
+        setTableData(latestOrders);
       } catch (error) {
         console.error("Error fetching orders:", error);
       }
@@ -96,14 +97,6 @@ const AreaTable = () => {
                     </div>
                   </td>
                   <td>{formatCurrency(parseFloat(order.totalPrice))}</td>
-                  <td className="dt-cell-action">
-                    <a
-                      href={`/orders/${order.id}`}
-                      className="view-details-link"
-                    >
-                      <FaEye style={{ cursor: "pointer" }} />
-                    </a>
-                  </td>
                 </tr>
               );
             })}
