@@ -31,24 +31,22 @@ function OrderDetailsPage() {
   const componentRef = useRef();
 
   
-    const formatDateTime = (dateTime) => {
-      const date = new Date(dateTime);
+const formatDateTime = (dateTime) => {
+  const date = new Date(dateTime);
 
-      // Cộng thêm 7 giờ để chuyển từ UTC sang giờ Việt Nam
-      const localDate = new Date(date.getTime() + 7 * 60 * 60 * 1000);
+  const formattedDate = date.toLocaleDateString("vi-VN", {
+    timeZone: "UTC", // Đặt đúng múi giờ Việt Nam
+  });
 
-      const formattedDate = localDate.toLocaleDateString("vi-VN", {
-        timeZone: "Asia/Ho_Chi_Minh",
-      });
+  const formattedTime = date.toLocaleTimeString("vi-VN", {
+    timeZone: "UTC", // Đặt đúng múi giờ Việt Nam
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
 
-      const formattedTime = localDate.toLocaleTimeString("vi-VN", {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      });
-
-      return `${formattedTime} ${formattedDate}`;
-    };
+  return `${formattedTime} ${formattedDate}`;
+};
   
   useEffect(() => {
     if (id) {
