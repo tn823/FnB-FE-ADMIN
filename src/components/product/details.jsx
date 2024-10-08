@@ -214,7 +214,7 @@ function ProductDetailsPage() {
 
             {/* Thêm phần hiển thị danh sách Topping */}
             <Col span={12}>
-              <Title level={4}>Danh sách Topping</Title>
+              <Title level={4}>Danh sách Món Thêm</Title>
               {productData?.Toppings && productData.Toppings.length > 0 ? (
                 productData.Toppings.map((topping) => (
                   <div key={topping.id}>
@@ -222,7 +222,7 @@ function ProductDetailsPage() {
                   </div>
                 ))
               ) : (
-                <Text>Không có topping nào</Text>
+                <Text>Không có món thêm nào</Text>
               )}
             </Col>
           </Row>
