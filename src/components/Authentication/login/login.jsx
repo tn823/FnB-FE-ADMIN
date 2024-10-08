@@ -38,6 +38,9 @@ function Login() {
   return (
     <div className="login-container">
       <div className="login-form">
+        <div className="login-logo">
+          <img src="/logo.png" alt="Logo" />
+        </div>
         <h1>Đăng nhập</h1>
         {error && <p className="error">{error}</p>}
         <form onSubmit={handleLogin}>
@@ -49,6 +52,7 @@ function Login() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
+              placeholder="Nhập tên đăng nhập"
             />
           </div>
           <div className="form-group">
@@ -59,12 +63,14 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              placeholder="Nhập mật khẩu"
             />
           </div>
           <button type="submit" className="btn btn-primary">
             Đăng nhập
           </button>
         </form>
+        <p className="by-tn823">© 2024 by tn823</p>{" "}
       </div>
     </div>
   );
