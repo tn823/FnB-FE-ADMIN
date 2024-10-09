@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Table, Input, Select, Row, Col, Typography, Layout } from "antd";
 import axios from "axios";
@@ -6,6 +6,7 @@ import { ENDPOINTS } from "../../constants/common";
 import { Trash2 } from "lucide-react";
 import { Group } from "@mantine/core";
 import AddButton from "../Button/AddButton";
+import ConfirmDeleteModal from "../../modal/delete";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -17,6 +18,8 @@ function CategoryPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOption, setSearchOption] = useState("name");
   const [errorMessage, setErrorMessage] = useState("");
+  const [modalVisible, setModalVisible] = useState(false); // For modal visibility
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null); // Track the category to delete
   const navigate = useNavigate();
 
   const fetchCategories = () => {
@@ -64,17 +67,25 @@ function CategoryPage() {
   }, [searchTerm, searchOption]);
 
   const handleDelete = (id) => {
-    if (window.confirm("Bạn chắc chắn muốn xóa danh mục này không?")) {
-      axios
-        .delete(`${ENDPOINTS.CATEGORIES}/${id}`)
-        .then((res) => {
-          console.log(res.data.message);
-          fetchCategories();
-        })
-        .catch((err) => {
-          console.error("Lỗi khi xóa danh mục:", err);
-        });
-    }
+    setSelectedCategoryId(id); // Set the category to delete
+    setModalVisible(true); // Show the modal
+  };
+
+  const confirmDelete = () => {
+    axios
+      .delete(`${ENDPOINTS.CATEGORIES}/${selectedCategoryId}`)
+      .then((res) => {
+        console.log(res.data.message);
+        fetchCategories();
+        setModalVisible(false); // Hide the modal after deletion
+      })
+      .catch((err) => {
+        console.error("Lỗi khi xóa danh mục:", err);
+      });
+  };
+
+  const handleCancel = () => {
+    setModalVisible(false); // Hide modal when cancelled
   };
 
   const handleRowClick = (id) => {
@@ -117,7 +128,7 @@ function CategoryPage() {
               type="danger"
               onClick={(e) => {
                 e.stopPropagation();
-                handleDelete(record.id);
+                handleDelete(record.id); // Show modal when delete icon is clicked
               }}
             >
               Xóa
@@ -181,6 +192,13 @@ function CategoryPage() {
             {errorMessage}
           </div>
         )}
+        {/* Add the confirm delete modal */}
+        <ConfirmDeleteModal
+          visible={modalVisible}
+          onConfirm={confirmDelete}
+          onCancel={handleCancel}
+          title="Xác nhận xóa danh mục"
+        />
       </Content>
     </Layout>
   );
