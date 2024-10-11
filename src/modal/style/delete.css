@@ -1,7 +1,21 @@
-.modal-footer {
-    display: flex;
-    justify-content: flex-end;
-    /* Đặt các nút ở bên phải */
-    margin-top: 16px;
-    /* Khoảng cách phía trên cho footer */
+.confirm-delete-modal .ant-modal-content {
+    border-radius: 8px;
+}
+
+.confirm-delete-modal .ant-modal-header {
+    border-bottom: none;
+    padding: 24px 24px 0;
+}
+
+.confirm-delete-modal .ant-modal-body {
+    padding: 24px;
+}
+
+.confirm-delete-modal .modal-footer {
+    margin-top: 24px;
+    text-align: right;
+}
+
+.confirm-delete-modal .ant-btn {
+    min-width: 80px;
 }
