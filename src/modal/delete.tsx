@@ -1,6 +1,6 @@
 import React from "react";
-import { Modal, Button, Typography } from "antd";
-import './style/delete.css'
+import { Modal, Button, Typography, Space } from "antd";
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 const { Text } = Typography;
 
@@ -14,15 +14,27 @@ interface ConfirmDeleteModalProps {
 const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({ visible, onConfirm, onCancel, title }) => {
   return (
     <Modal
-      title="Xác nhận xóa"
+      title={
+        <Space>
+          <ExclamationCircleOutlined style={{ color: '#faad14' }} />
+          <span>Xác nhận xóa</span>
+        </Space>
+      }
       visible={visible}
-      onOk={onConfirm} // Khi người dùng nhấn OK
-      onCancel={onCancel} // Khi người dùng nhấn Cancel
-      okText="Xóa"
-      cancelText="Hủy"
-      okButtonProps={{ danger: true }} // Nút OK có màu đỏ để cảnh báo xóa
+      onCancel={onCancel}
+      footer={null}
+      width={400}
+      className="confirm-delete-modal"
     >
-      <Text>{`Bạn có chắc chắn muốn xóa không?`}</Text>
+      <Text>{`Bạn có chắc chắn muốn xóa "${title}" không?`}</Text>
+      <div className="modal-footer">
+        <Space size="middle">
+          <Button onClick={onCancel}>Hủy</Button>
+          <Button type="primary" danger onClick={onConfirm}>
+            Xóa
+          </Button>
+        </Space>
+      </div>
     </Modal>
   );
 };
