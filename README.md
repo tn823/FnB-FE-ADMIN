@@ -1,131 +1,77 @@
-# F&B Front-End Project
 
-[TODO] Description for f&b 
+# F&B Frontend Admin Project
 
-## 🧑‍💻 Get Started
+## 📝 Project Description
 
-You will be invited to the project first. Then, you have to setup ssh for this project
+This project is a Frontend Admin web application for managing an F&B system. It is built using React.js and is designed for admins to manage products, orders, and various other elements in the system efficiently.
 
-Prerequisites:
+**Admin Account:**
+- Username: `tn823`
+- Password: `0000`
 
-- Node 20+ (prefer way: setup nvm, then run command `nvm install 20` -> `nvm use 20`)
-- Yarn 1.22+
-- Setup ssh 
-- VSCode
-- Installing [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) and [Eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) extentions
+---
 
-To set up the app, please execute the following commands.
+## 🚀 Get Started
 
-```bash
-git clone https://github.com/fandboder/React-FE-web.git
-cd fe-web
-yarn install
-```
+### Prerequisites:
 
-The common commands:
+- **Node.js**: Version 20 or higher (recommend using `nvm`)
+- **Yarn**: Version 1.22 or higher
+- **VSCode**: Recommended for code editing
+- **Extensions**:
+  - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) - Code formatting
+  - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) - Linting
+- **SSH setup**: For accessing and managing project code
 
-`yarn dev`
+### Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To set up the project locally, please follow these steps:
 
-`yarn build`
+1. Clone the repository:
 
-Builds the app for production to the `.next` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    \`\`\`bash
+    git clone https://github.com/tn823/FnB-FE-ADMIN.git
+    \`\`\`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Install dependencies using Yarn:
 
-`yarn start`
+    \`\`\`bash
+    npm install
+    \`\`\`
 
-Runs the app in the production mode.\
-Require `yarn build` before
+3. Start the development server:
 
-`yarn push` 
+    \`\`\`bash
+    npm run dev
+    \`\`\`
 
-Deploy staging (make sure you have aws credential before running this command).
+    The app will run in development mode at: [http://localhost:5173](http://localhost:5173)
 
-## 🗄 Project Structure
+---
 
-The code in the root folder looks like this:
+## 🌳 Git Branch Naming Convention
 
-```sh
-src
-|
-+-- .husky            # You can catch hooks when you commit or push, see more at https://typicode.github.io/husky/#/
-|
-+-- .next             # build folder of NextJS, see more at https://nextjs.org/docs/app/building-your-application/deploying
-|
-+-- .vscode           # vscode editor configuration
-|
-+-- public            # folder contains static file which is not used by your app when it compiles
-|
-+-- src               # main source code
+### Feature Branch:
+- Branches for new features should be created from the `develop` branch and follow this naming pattern:
+  \`\`feature/TaskNo_TaskName\`\`
+  
+  Example: `feature/PRO-10_Login`
 
-```
+### Bug Fix Branch:
+- Bug fix branches should follow this naming pattern:
+  \`\`fix/TaskNo_TaskName\`\`
+  
+  Example: `fix/PRO-10_Login`
 
-Most of the code lives in the `src` folder should be common and looks like this:
+### Hotfix Branch:
+- For production bug fixes, use the following naming pattern:
+  \`\`hotfix/TaskNo_TaskName\`\`
+  
+  Example: `hotfix/PRO-10_Login`
 
-```sh
-src
-+-- app               # app routes defined by Nextjs
-|
-+-- assets            # shared assets (images, icons)
-|
-+-- components        # shared, pure components used across the entire application (define component props types into file)
-|
-+-- constants         # shared constants used across the entire application
-|
-+-- hooks             # shared hooks used across the entire application
-|
-+-- lib               # re-exporting different libraries preconfigured for the application
-|
-+-- services          # API services (Client <-> service <-> Server)
-|
-+-- stores            # global state stores with Redux
-|
-+-- types             # base, common types used across the application
-|
-+-- utils             # shared utility functions
-```
+---
 
-Most of the code lives in the `src/components` folder and looks like this:
+## 📁 Folder and File Naming Convention
 
-```sh
-components            # all components might be reused
-|
-+-- core              # all pure components which is not related to business logic, it can be used anywhere
-|
-+-- layouts           # all layout components
-|
-+-- features          # all features components which is related to business logic
-```
-
-Most of the code lives in the `src/app` folder defined by [app routing convention](https://nextjs.org/docs/getting-started/project-structure#app-routing-conventions). This is our own complementary convention:
-
-```sh
-Note: The following files are optional, related only to the business logic of that route or its children, and should be used by sibling or child routes.
-app
-+-- _components       # all components
-|
-+-- constants.tsx     # all constants
-|
-+-- types.tsx         # all types
-|
-+-- utils.tsx         # all utils
-```
-
-## 📁 Folder and file naming convention
-Components are using `Camel Case`. The others are using `kebab-case`
-
-## 🌳 Git branch naming convention
-
-Feature: Create a new branch from the `develop` branch, branch name follows this pattern `feature/TaskNo_TaskName`.
-Ex: `feature/PRO-10_Login`
-
-Bug: Should confirm where should branch checkout from. Branch name follows pattern `fix/TaskNo_TaskName`.
-Ex: `fix/PRO-10_Login`
-
-Production bug: Should confirm where should branch checkout from. Branch name follows patterns `hotfix/TaskNo_TaskName`.
-Ex: `hotfix/PRO-10_Login`
+- **Components**: Use `CamelCase`.
+- **Others (files/folders)**: Use `kebab-case`.
