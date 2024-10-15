@@ -13,65 +13,101 @@ This project is a Frontend Admin web application for managing an F&B system. It 
 
 ## 🚀 Get Started
 
-### Prerequisites:
+### Prerequisites
 
-- **Node.js**: Version 20 or higher (recommend using `nvm`)
-- **Yarn**: Version 1.22 or higher
+Before setting up the project, ensure you have the following:
+
+- **Node.js**: Version 20 or higher (recommended: `nvm`)
+- **npm**: Version 6+ (comes with Node.js)
 - **VSCode**: Recommended for code editing
 - **Extensions**:
-  - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) - Code formatting
-  - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) - Linting
-- **SSH setup**: For accessing and managing project code
+  - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) - Code formatter
+  - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) - Linting tool
+- **SSH setup**: Required for accessing and managing project code
 
-### Installation
+### Installation Steps
 
-To set up the project locally, please follow these steps:
+Follow these steps to set up the project locally:
 
 1. Clone the repository:
 
-    \`\`\`bash
+    ```bash
     git clone https://github.com/tn823/FnB-FE-ADMIN.git
-    \`\`\`
+    cd FnB-FE-ADMIN
+    ```
 
-2. Install dependencies using Yarn:
+2. Install project dependencies:
 
-    \`\`\`bash
+    ```bash
     npm install
-    \`\`\`
+    ```
 
 3. Start the development server:
 
-    \`\`\`bash
+    ```bash
     npm run dev
-    \`\`\`
+    ```
 
-    The app will run in development mode at: [http://localhost:5173](http://localhost:5173)
+    The app will be available at: [http://localhost:5173](http://localhost:5173)
+
+---
+
+## 📁 Project Structure
+
+The code is organized in a structured format for easier maintenance:
+
+```sh
+src
+|
++-- .husky            # Git hooks (e.g., for commit and push actions)
++-- .vscode           # VSCode configurations
++-- public            # Static files
++-- src               # Main source code
+```
+
+### Detailed Structure
+
+```sh
+src
++-- app               # Next.js routes
++-- assets            # Images and icons
++-- components        # Reusable components
++-- constants         # Shared constants
++-- hooks             # Custom hooks
++-- lib               # Preconfigured libraries
++-- services          # API services
++-- stores            # Global state management (Redux)
++-- types             # Type definitions
++-- utils             # Utility functions
+```
 
 ---
 
 ## 🌳 Git Branch Naming Convention
 
-### Feature Branch:
-- Branches for new features should be created from the `develop` branch and follow this naming pattern:
-  \`\`feature/TaskNo_TaskName\`\`
-  
+To maintain consistency, please follow these branch naming conventions:
+
+- **Feature Branch**: For new features, branch from `develop` and use the following pattern:
+  ```bash
+  feature/TaskNo_TaskName
+  ```
   Example: `feature/PRO-10_Login`
 
-### Bug Fix Branch:
-- Bug fix branches should follow this naming pattern:
-  \`\`fix/TaskNo_TaskName\`\`
-  
+- **Bug Fix Branch**: For bug fixes, branch from the appropriate base and use:
+  ```bash
+  fix/TaskNo_TaskName
+  ```
   Example: `fix/PRO-10_Login`
 
-### Hotfix Branch:
-- For production bug fixes, use the following naming pattern:
-  \`\`hotfix/TaskNo_TaskName\`\`
-  
+- **Hotfix Branch**: For production bug fixes, branch from the production base and use:
+  ```bash
+  hotfix/TaskNo_TaskName
+  ```
   Example: `hotfix/PRO-10_Login`
 
 ---
 
 ## 📁 Folder and File Naming Convention
 
-- **Components**: Use `CamelCase`.
-- **Others (files/folders)**: Use `kebab-case`.
+- **Components**: Use `CamelCase` (e.g., `ProductList.js`)
+- **Other files/folders**: Use `kebab-case` (e.g., `product-list.js`)
